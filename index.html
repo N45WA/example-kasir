@@ -1,0 +1,131 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Meta tags -->
+    <title>Login Kasir</title>
+    <!-- CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-gray-100">
+    <!-- Login Form -->
+    <div class="flex justify-center items-center h-screen">
+      <div class="bg-white p-8 rounded shadow-md w-full max-w-md">
+        <h2 class="text-2xl font-semibold mb-4">Login Kasir</h2>
+        <form id="login-form">
+          <!-- Username Input -->
+          <div class="mb-4">
+            <label
+              for="username"
+              class="block text-sm font-medium text-gray-700"
+              >Username:</label
+            >
+            <input
+              type="text"
+              id="username"
+              name="username"
+              required
+              class="mt-1 p-2 block w-full border rounded-md"
+            />
+          </div>
+          <!-- Password Input -->
+          <div class="mb-4">
+            <label
+              for="password"
+              class="block text-sm font-medium text-gray-700"
+              >Password:</label
+            >
+            <div class="relative">
+              <input
+                type="password"
+                id="password"
+                name="password"
+                required
+                class="mt-1 p-2 block w-full border rounded-md pr-10"
+              />
+              <button
+                type="button"
+                onclick="togglePasswordVisibility()"
+                class="absolute inset-y-0 right-0 flex items-center px-2 text-gray-600 focus:outline-none"
+              >
+                <!-- Toggle Password Visibility Button -->
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M15.25 8a3.25 3.25 0 11-6.5 0 3.25 3.25 0 016.5 0zM12 14.75c-2.325 0-4.324-.967-6-2.553m6-3.197a3.95 3.95 0 00-1.5-.3c-2.33 0-4.33.98-6 2.604m6 3.196c1.214 1.176 2.733 1.849 4.5 1.849s3.286-.673 4.5-1.849m-4.5-3.197a2.001 2.001 0 113.999-.001 2.001 2.001 0 01-3.999.001z"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+          <!-- Login Button -->
+          <button
+            type="submit"
+            class="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600"
+          >
+            Login
+          </button>
+        </form>
+      </div>
+    </div>
+    <!-- JavaScript -->
+    <script>
+      // Data akun
+      var accounts = [
+        { username: "admin", password: "admin", name: "Admin", role: "admin" },
+        {
+          username: "luthfi",
+          password: "luthfi",
+          name: "Luthfi",
+          role: "kasir",
+        },
+        { username: "lala", password: "lala", name: "Lala", role: "kasir" },
+        // Tambahkan akun lain di sini jika diperlukan
+      ];
+
+      document
+        .getElementById("login-form")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+          var username = document.getElementById("username").value;
+          var password = document.getElementById("password").value;
+
+          // Validasi akun
+          var validAccount = accounts.find(function (account) {
+            return (
+              account.username === username && account.password === password
+            );
+          });
+
+          if (validAccount) {
+            // Jika akun valid, simpan nama pengguna dan peran ke sessionStorage
+            sessionStorage.setItem("username", validAccount.name);
+            sessionStorage.setItem("role", validAccount.role);
+            window.location.href = "kasir.html";
+          } else {
+            alert("Username atau password salah!");
+          }
+        });
+
+      function togglePasswordVisibility() {
+        var passwordInput = document.getElementById("password");
+        if (passwordInput.type === "password") {
+          passwordInput.type = "text";
+        } else {
+          passwordInput.type = "password";
+        }
+      }
+    </script>
+  </body>
+</html>

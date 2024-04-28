@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Struk Pembelian</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-gray-100">
+    <div class="flex justify-center items-center min-h-screen">
+      <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+        <div class="text-center mb-8">
+          <h1 class="text-2xl font-bold mb-2">Struk Pembelian</h1>
+          <p class="text-gray-600">Nama Toko: Kasir Sederhana</p>
+        </div>
+        <div class="mb-4">
+          <p class="text-sm">Tanggal: <span id="tanggal"></span></p>
+          <p class="text-sm">Waktu: <span id="waktu"></span></p>
+        </div>
+        <div class="border-t border-b py-4 mb-4">
+          <h2 class="text-lg font-semibold mb-2">Daftar Barang:</h2>
+          <ul id="barang-list" class="list-disc pl-6"></ul>
+        </div>
+        <div class="mb-4">
+          <p class="text-lg font-semibold mb-1">Total Belanja:</p>
+          <p id="total-belanja" class="text-xl font-bold text-right"></p>
+        </div>
+        <div class="mb-4">
+          <div class="flex justify-between">
+            <p class="text-lg font-semibold">Uang Diterima:</p>
+            <p id="uang-diterima" class="text-lg font-semibold"></p>
+          </div>
+          <div class="flex justify-between">
+            <p class="text-lg font-semibold">Kembalian:</p>
+            <p id="kembalian" class="text-lg font-semibold"></p>
+          </div>
+        </div>
+        <div class="flex justify-center">
+          <button
+            onclick="window.location.href='kasir.html'"
+            class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+          >
+            Kembali ke Kasir
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      var daftarBarang = JSON.parse(sessionStorage.getItem("daftarBarang"));
+      var totalHarga = parseInt(sessionStorage.getItem("totalHarga"));
+      var uangDiterima = parseInt(sessionStorage.getItem("uangDiterima"));
+      var kembalian = parseInt(sessionStorage.getItem("kembalian"));
+
+      var now = new Date();
+      document.getElementById("tanggal").textContent = now.toLocaleDateString();
+      document.getElementById("waktu").textContent = now.toLocaleTimeString();
+
+      var listContainer = document.getElementById("barang-list");
+      daftarBarang.forEach(function (barang) {
+        var listItem = document.createElement("li");
+        listItem.textContent = `${barang.produk} - Rp${barang.harga} x ${barang.jumlah} = Rp${barang.subtotal}`;
+        listContainer.appendChild(listItem);
+      });
+
+      document.getElementById("total-belanja").textContent = `Rp${totalHarga}`;
+      document.getElementById(
+        "uang-diterima"
+      ).textContent = `Rp${uangDiterima}`;
+      document.getElementById("kembalian").textContent = `Rp${kembalian}`;
+    </script>
+  </body>
+</html>
